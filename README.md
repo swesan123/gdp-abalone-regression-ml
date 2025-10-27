@@ -17,7 +17,7 @@ It explores how simple and polynomial regression techniques can be applied to re
 ### Key Concepts Demonstrated
 
 - Linear Regression using Gradient Descent and OLS  
-- Polynomial Regression with automatic degree selection  
+- Polynomial Regression with automatic degree selection on training data
 - Feature scaling and standardization  
 - Train/test data splitting  
 - Model evaluation using Mean Squared Error (MSE)  
@@ -54,7 +54,7 @@ gdp-abalone-regression-ml/
 
 ### 🧩 Installing Conda
 
-If you don’t already have Conda installed, you can install it using **[Miniconda](https://www.anaconda.com/download/success)**
+If you don't already have Conda installed, you can install it using **[Miniconda](https://www.anaconda.com/download/success)**
 
 #### Miniconda (lightweight, recommended)
 
@@ -91,25 +91,7 @@ conda activate gdp-abalone-ml
 ### 1. Linear Regression (GDP vs Happiness)
 
 Performs linear regression using both **Gradient Descent** and **OLS** methods.  
-Plots gradient-descent fits for different learning rates and epochs, and compares the best GD result with OLS.
-
-```bash
-python3 models/abalone_regresion.py
-```
-
-**Output:**
-
-- Prints top results ranked by MSE  
-- Saves plots in `plots/`:
-  - `gd_lines.png` — multiple GD regression lines  
-  - `ols_vs_gd.png` — comparison between OLS and best GD line
-
----
-
-### 2. Polynomial Regression (Abalone Dataset)
-
-Performs polynomial regression on the **Abalone** dataset with automatic degree selection per feature.  
-Includes train/test split, standardization, validation-based model tuning, and visualization.
+Tests a 5×5 grid of learning rates and epochs, then plots the top 5 GD results alongside OLS and best GD fits.
 
 ```bash
 python3 models/gdp_regression.py
@@ -117,9 +99,27 @@ python3 models/gdp_regression.py
 
 **Output:**
 
-- Displays selected polynomial degrees and per-feature equations  
-- Prints β′ coefficients, Train/Test MSE  
-- Saves visualizations in `plots/features_vs_rings_with_fits.png`
+- Prints best GD parameters and MSE
+- Saves plot in `plots/gdp_regression_results.png` showing:
+  - Top 5 GD regression lines
+  - OLS comparison line
+  - Best GD result highlighted
+
+---
+
+### 2. Polynomial Regression (Abalone Dataset)
+
+Performs polynomial regression on the **Abalone** dataset with automatic degree selection per feature.  
+Includes train/test split, standardization, training-based degree tuning, and visualization.
+
+```bash
+python3 models/abalone_regression.py
+```
+
+**Output:**
+
+- Prints Train/Test MSE results
+- Saves visualization in `plots/abalone_regression_results.png` showing per-feature polynomial fits
 
 ---
 
@@ -127,15 +127,14 @@ python3 models/gdp_regression.py
 
 | Dataset | Technique | Output File | Description |
 |----------|------------|-------------|--------------|
-| GDP vs Happiness | Gradient Descent (5×5 grid search over η, epochs) | `plots/gd_lines.png` | Gradient Descent regression fits |
-| GDP vs Happiness | OLS vs GD comparison | `plots/ols_vs_gd.png` | Overlay of OLS and best GD result |
-| Abalone | Polynomial Regression | `plots/features_vs_rings_with_fits.png` | Per-feature fits and predictions |
+| GDP vs Happiness | Gradient Descent + OLS | `plots/gdp_regression_results.png` | Combined visualization of top GD results, OLS, and best fit |
+| Abalone | Polynomial Regression | `plots/abalone_regression_results.png` | Per-feature polynomial fits with selected degrees |
 
 ---
 
 ## 🧩 Streamlit Dashboard
 
-The dashboard (optional) integrates both models for real-time visualization and comparison.
+A basic interactive dashboard for exploring the regression models.
 
 To launch:
 
@@ -143,11 +142,12 @@ To launch:
 streamlit run app.py
 ```
 
-This will open a local dashboard allowing:
+**Features:**
 
-- Interactive visualization of GDP–Happiness regression  
-- Adjustable polynomial degree sliders for the Abalone model  
-- Real-time updates of MSE and regression curves
+- **GDP Tab:** Interactive parameter adjustment (learning rate, epochs) with single regression line visualization
+- **Abalone Tab:** Adjustable max polynomial degree with external plot generation
+
+**Note:** For complete model comparisons and detailed visualizations, run the individual Python scripts directly.
 
 ---
 
@@ -173,8 +173,9 @@ This will open a local dashboard allowing:
 
 - **Features:** Continuous shell measurements (Length, Diameter, Height, etc.)  
 - **Target:** Rings + 1.5 (proxy for age in years)  
-- **Degree Selection:** Automatic (1–6) based on validation MSE per feature  
-- **Evaluation Metrics:** Train/Test MSE, β′ coefficients, and per-feature visualization.
+- **Degree Selection:** Automatic (1–4) based on training MSE per feature  
+- **Method:** Individual polynomial fits per feature with standardized inputs
+- **Evaluation Metrics:** Train/Test MSE and per-feature visualization
 
 ---
 
