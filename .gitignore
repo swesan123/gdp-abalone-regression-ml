@@ -1,0 +1,46 @@
+# --- Conda & Virtual Environment ---
+# Conda environments (local virtual envs)
+.conda/
+env/
+venv/
+.venv/
+conda-meta/
+*.conda
+*.egg-info/
+
+# --- Python cache and build artifacts ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg
+build/
+dist/
+*.manifest
+*.spec
+
+# --- IDE / Editor files ---
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# --- OS-generated files ---
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# --- Streamlit & Notebook outputs ---
+.streamlit/
+.ipynb_checkpoints/
+*.log
+
+# --- Data and plots (if large) ---
+plots/*.png
+datasets/*.csv
+
+# --- Environment and dependency files (keep environment.yml) ---
+# DO NOT ignore environment.yml — it's needed for reproducibility
+# environment.yml
